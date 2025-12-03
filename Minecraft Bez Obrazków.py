@@ -2,9 +2,14 @@ import random
 import time
 def fight(Wojownik, Boss):
     while Wojownik['hp']>0 or Boss['hp']>0:
-        Boss['hp']-=Wojownik['power']
-        print(Wojownik['name'] + ' zadał ' + Boss['name'] + ' ' + str(Wojownik['power'])
-              + ' hp. ' + 'Bossowi zostało ' + str(Boss['hp']))
+        if random.randint(1, 100)<=Wojownik['crit']:
+            Boss['hp']-=Wojownik['power']*2
+            print(Wojownik['name'] + ' zadał ' + Boss['name'] + ' ' + str(Wojownik['power']*2)
+                  + ' hp. ' + 'Bossowi zostało ' + str(Boss['hp']))
+        else:
+            Boss['hp']-=Wojownik['power']
+            print(Wojownik['name'] + ' zadał ' + Boss['name'] + ' ' + str(Wojownik['power'])
+                  + ' hp. ' + 'Bossowi zostało ' + str(Boss['hp']))
         time.sleep(0.67)
         if Boss['hp']<=0:
             print(Wojownik['name'] + ' pokonał ' + Boss['name'])
@@ -12,9 +17,17 @@ def fight(Wojownik, Boss):
             Wojownik['gold']+=zdobytehajsiwo
             break
         else:
-            Wojownik['hp']-=Boss['power']
-            print(Boss['name'] + ' zadał ' + Wojownik['name'] + ' ' + str(Boss['power'])
-                  +  ' hp. ' + 'Zostało ci ' + str(Wojownik['hp']))
+            if random.randint(1, 100)<=Boss['blok']:
+                print(Boss['name'] + ' says not today thank you')
+            else:
+                if random.randint(1, 100)<=Boss['crit']:
+                    Wojownik['hp']-=Boss['power']*2
+                    print(Boss['name'] + ' zadał ' + Wojownik['name'] + ' ' + str(Boss['power']*2)
+                          + ' hp. ' + 'zostało ci ' + str(Wojownik['hp']))
+                else:
+                    Wojownik['hp']-=Boss['power']
+                    print(Boss['name'] + ' zadał ' + Wojownik['name'] + ' ' + str(Boss['power'])
+                          + ' hp. ' + 'zostało ci ' + str(Wojownik['hp']))
             time.sleep(0.67)
             if Wojownik['hp']<=0:
                 print(Boss['name'] + ' niestety cię unicestwił')
@@ -23,22 +36,30 @@ Wojownik = {
     'name': 'SharkyDominik',
     'power': 5,
     'hp': 10,
-    'gold': 0
+    'gold': 0,
+    'crit': 10,
+    'blok': 0
 }
 Ender_Dragon = {
     'name': 'Ender_Dragon',
     'power': 10,
-    'hp': 500
+    'hp': 500,
+    'crit': 0,
+    'blok': 20
 }
 Wither = {
     'name': 'Wither',
     'power': 20,
-    'hp': 300
+    'hp': 300,
+    'crit': 25,
+    'blok': 10
 }
 Warden = {
     'name': 'Warden',
     'power': 30,
-    'hp': 250
+    'hp': 250,
+    'crit': 40,
+    'blok': 15
 }
 Player = Wojownik.copy()
 while True:
